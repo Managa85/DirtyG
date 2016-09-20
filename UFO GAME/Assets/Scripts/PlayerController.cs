@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
 	public Text CountText;
 	public Text WinText;
 
+	public VitualJoystick moveJoystick;
+
 	private Rigidbody2D rb2d;
 
 	void Start () {
@@ -23,7 +25,12 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate () {
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
-		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
+		Vector3 movement = new Vector3 (moveHorizontal, moveVertical);
+
+		if (moveJoystick.InputDirection != Vector3.zero) {
+			movement = moveJoystick.InputDirection;
+		}
+
 		rb2d.AddForce (movement * speed);
 	}
 
